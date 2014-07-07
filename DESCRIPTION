@@ -1,5 +1,5 @@
 Package: RODBCext
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(person("Mateusz", "Zoltak", role = c("aut", "cre"),
     email = "zozlak@zozlak.org"),
     person("Brian", "Ripley", role = c("aut")),
@@ -17,6 +17,6 @@ Author: Mateusz Zoltak [aut, cre],
     Michael Lapsley [aut]
 Maintainer: Mateusz Zoltak <zozlak@zozlak.org>
 NeedsCompilation: yes
-Packaged: 2014-07-03 08:54:12 UTC; zozlak
+Packaged: 2014-07-07 12:07:42 UTC; zozlak
 Repository: CRAN
-Date/Publication: 2014-07-03 15:51:27
+Date/Publication: 2014-07-07 15:42:06

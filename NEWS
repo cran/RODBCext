@@ -1,4 +1,8 @@
-Changes in RODBCext 0.2 (2014-07-01)
+Changes in RODBCext 0.2.2 (2014-07-07)
+
+  * Some minor changes in RODBCext.c to avoid compilation errors on Solaris
+
+Changes in RODBCext 0.2.1 (2014-07-04)
 
   * Some minor changes to eliminate notices raised on a package check:
     * too long line in sqlExec() examples splitted
