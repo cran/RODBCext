@@ -19,11 +19,11 @@
 
 /* macro to check and handle ODBC API calls results */
 #define SQL_RESULT_CHECK(res, handle, errorMessage, ret) \
-  if(res != SQL_SUCCESS && res != SQL_SUCCESS_WITH_INFO){ \
-    geterr(handle); \
-    errlistAppend(handle, errorMessage); \
-    FreeHandleResources(handle); \
-    return ret; \
+  if(res != SQL_SUCCESS && res != SQL_SUCCESS_WITH_INFO && res != SQL_NO_DATA){ \
+    geterr(handle);                                            \
+    errlistAppend(handle, errorMessage);                       \
+    FreeHandleResources(handle);                               \
+    return ret;                                                \
   }
 
 /**

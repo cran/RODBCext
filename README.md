@@ -1,5 +1,7 @@
 # RODBCext
 
+[![Travis-CI Build Status](https://travis-ci.org/zozlak/RODBCext.png?branch=master)](https://travis-ci.org/zozlak/RODBCext)
+
 Extension to the RODBC R package providing support for parameterized queries.
 
 Parameterized queries are the kosher way of executing SQL queries when query string contain data from untrusted sources (especially user input).
@@ -22,8 +24,7 @@ install.packages('RODBCext')
 
 `Devtools` package provide an easy way to install packages from the GitHub.
 
-Unfortunately due to a bug in `devtools` this solution doesn't work on 64-bit linux platforms.
-
+If you encounter problems during installation on a Linux, please check if [this applies to you](https://github.com/hadley/devtools/issues/650) or switch to other installation method.
 
 1) Obtain recent gcc, g++, and gfortran compilers. Windows users can install the
    [Rtools](http://cran.r-project.org/bin/windows/Rtools/) suite while Mac users will have to
