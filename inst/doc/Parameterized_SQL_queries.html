@@ -150,8 +150,8 @@ $(document).ready(function () {
 </div>
 
 
-<p>The package <a href="http://cran.r-project.org/package=RODBCext">RODBCext</a> is an extension of the <a href="http://cran.r-project.org/package=RODBC">RODBC</a> database connectivity package. It provides support for parameterized queries. This document describes what parameterized queries are and when they should be used. In addition some examples of ROBDCext usage are shown.</p>
-<p>It is assumed that you already know the <a href="http://cran.r-project.org/package=RODBC">RODBC</a> package and the basics of <a href="http://en.wikipedia.org/wiki/SQL">SQL</a> and ODBC. If not, please read about them first, e.g. see the <a href="http://cran.r-project.org/web/packages/RODBC/vignettes/RODBC.pdf">ODBC Connectivity vignette</a> of the RODBC package.</p>
+<p>The package <a href="https://CRAN.R-project.org/package=RODBCext">RODBCext</a> is an extension of the <a href="https://CRAN.R-project.org/package=RODBC">RODBC</a> database connectivity package. It provides support for parameterized queries. This document describes what parameterized queries are and when they should be used. In addition some examples of ROBDCext usage are shown.</p>
+<p>It is assumed that you already know the <a href="https://CRAN.R-project.org/package=RODBC">RODBC</a> package and the basics of <a href="http://en.wikipedia.org/wiki/SQL">SQL</a> and ODBC. If not, please read about them first, e.g. see the <a href="https://CRAN.R-project.org/package=RODBC/vignettes/RODBC.pdf">ODBC Connectivity vignette</a> of the RODBC package.</p>
 <div id="what-are-parameterized-queries-for" class="section level1">
 <h1><span class="header-section-number">1</span> What are parameterized queries for?</h1>
 <p>Parameterized queries (also known as prepared statements) are a technique of query execution which separates a query string from query parameters values. There are two main reasons for using this technique:</p>
@@ -205,7 +205,7 @@ $(document).ready(function () {
 connHandle &lt;-<span class="st"> </span><span class="kw">odbcConnect</span>(<span class="st">&quot;cakesDatabase&quot;</span>)
 newData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;newData.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> F)
 
-for(row in <span class="dv">1</span>:<span class="kw">nrow</span>(newData)){
+for(row in <span class="kw">seq_len</span>(<span class="kw">nrow</span>(newData))){
   query &lt;-<span class="st"> </span><span class="kw">paste0</span>(
     <span class="st">&quot;UPDATE cakes </span>
 <span class="st">     SET price = &quot;</span>, newData$price[row], <span class="st">&quot; </span>
@@ -253,7 +253,7 @@ for(row in <span class="dv">1</span>:<span class="kw">nrow</span>(newData)){
 connHandle &lt;-<span class="st"> </span><span class="kw">odbcConnect</span>(<span class="st">'studentsDatabase'</span>)
 newStudents &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">'newStudents.csv'</span>, <span class="dt">stringsAsFactors =</span> F)
 
-for(row in <span class="dv">1</span>:<span class="kw">nrow</span>(newStudents)){
+for(row in <span class="kw">seq_len</span>(<span class="kw">nrow</span>(newStudents))){
   query &lt;-<span class="st"> </span><span class="kw">paste0</span>(
     <span class="st">&quot;INSERT INTO students (first_name, last_name)</span>
 <span class="st">     VALUES (</span>
@@ -330,7 +330,7 @@ connHandle &lt;-<span class="st"> </span><span class="kw">odbcConnect</span>(<sp
 newData &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;newData.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> F)
 
 query &lt;-<span class="st"> &quot;UPDATE cakes SET price = ? WHERE cake = ?&quot;</span>
-for(row in <span class="dv">1</span>:<span class="kw">nrow</span>(newData)){
+for(row in <span class="kw">seq_len</span>(<span class="kw">nrow</span>(newData))){
   <span class="kw">sqlExecute</span>(connHandle, query, newData[i, ])
 }
 
@@ -350,14 +350,14 @@ query &lt;-<span class="st"> &quot;UPDATE cakes SET price = ? WHERE cake = ?&quo
 <div id="using-high-level-functions-which-deal-with-esaping-values-for-us" class="section level3">
 <h3><span class="header-section-number">2.3.3</span> Using high-level functions which deal with esaping values for us</h3>
 <p>This would be the most straightforward solution.</p>
-<p>An excellent example is <a href="http://cran.r-project.org/package=dplyr">dplyr</a>, which provides a complete R to SQL mapper and allows us to completely forget about the SQL. Another example are the <em>sqlSave(), sqlUpdate(), sqlCopy() and sqlCopyTable()</em> functions from the <a href="http://cran.r-project.org/package=RODBC">RODBC</a> package which deal with escaping values for us.</p>
+<p>An excellent example is <a href="https://CRAN.R-project.org/package=dplyr">dplyr</a>, which provides a complete R to SQL mapper and allows us to completely forget about the SQL. Another example are the <em>sqlSave(), sqlUpdate(), sqlCopy() and sqlCopyTable()</em> functions from the <a href="https://CRAN.R-project.org/package=RODBC">RODBC</a> package which deal with escaping values for us.</p>
 <p>The problem is that: * <em>Dplyr</em> escapes values rather naively. With respect to strings only simple ‘to’’ escaping is performed <strong>which is enough to prevent silly errors but will fail against more advanced SQL injections</strong>. * <em>RODBC’s</em> high-level functions escape values in a safe way (by internally using parameterized queries), but have very limited functionality. Interestingly, judging from the comments in the source code, the parameterized queries have been introduced to them not to make them safe but to improve speed.</p>
 </div>
 </div>
 <div id="summary" class="section level2">
 <h2><span class="header-section-number">2.4</span> Summary</h2>
 <p>When using SQL we must pay attention to escape query parameter values properly. The existing R database connectivity packages do not provide a completely reliable way of doing that. A set of SQL injections safe functions provides very limited functionality and more flexible functions are using naive escaping methods. That is why RODBCext is a preferred way to make your R code SQL injections safe.</p>
-<p>I hope <a href="http://cran.r-project.org/package=dplyr">dplyr</a> developers will switch to use parameterized queries internally at some point. This would provide R community with a brilliant and safe R to SQL mapper and to forget about a manual preparation of SQL queries.</p>
+<p>I hope <a href="https://CRAN.R-project.org/package=dplyr">dplyr</a> developers will switch to use parameterized queries internally at some point. This would provide R community with a brilliant and safe R to SQL mapper and to forget about a manual preparation of SQL queries.</p>
 </div>
 </div>
 <div id="speeding-up-query-execution-using-parameterized-queries" class="section level1">
@@ -377,7 +377,7 @@ data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span clas
 
 <span class="co"># Ordinary query - paste0() called in every loop</span>
 <span class="kw">system.time</span>({
-  for(row in <span class="dv">1</span>:<span class="kw">nrow</span>(data)){
+  for(row in <span class="kw">seq_len</span>(<span class="kw">nrow</span>(data))){
     query &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;INSERT INTO my_table VALUES (&quot;</span>, data[row, <span class="dv">1</span>], <span class="st">&quot;'&quot;</span>, data[row, <span class="dv">2</span>],<span class="st">&quot;')&quot;</span>)
     <span class="kw">sqlQuery</span>(connHandle, query)
   }
@@ -468,7 +468,7 @@ pupils =<span class="st"> </span><span class="kw">sqlQuery</span>(
 <p>Unfortunately all known to me R packages providing support for SQL databases lacks support for parameterized queries. Even the R DBI interface doesn’t define any methods which would allow to implement parameterized queries. The main reason for that is probably that R packages developers used to see SQL databases as <em>just another storage backend for data frames</em> rather than powerful data processing engines (which modern SQL databases already are).</p>
 <div id="rodbcext" class="section level2">
 <h2><span class="header-section-number">4.1</span> RODBCext</h2>
-<p>RODBCext package tries to fill this gap by introducing parameterized queries support on the top of the <a href="http://cran.r-project.org/package=RODBC">RODBC</a> package. RODBCext provides only two functions, both of them using database connection handlers from RODBC:</p>
+<p>RODBCext package tries to fill this gap by introducing parameterized queries support on the top of the <a href="https://CRAN.R-project.org/package=RODBC">RODBC</a> package. RODBCext provides only two functions, both of them using database connection handlers from RODBC:</p>
 <ul>
 <li><code>sqlPrepare(connHandle, SQLquery, errors = TRUE)</code></li>
 <li><code>sqlExecute(connHandle, SQLquery, data, fetch = FALSE, errors = TRUE, ...)</code></li>
@@ -493,7 +493,7 @@ filterData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<spa
 data &lt;-<span class="st"> </span><span class="kw">sqlExecute</span>(connHandle, <span class="st">&quot;SELECT * FROM myTable WHERE column1 = ? AND column2 = ?&quot;</span>, filterData, <span class="dt">fetch =</span> <span class="ot">TRUE</span>)
 
 <span class="kw">odbcClose</span>(connHandle)</code></pre></div>
-<p>Results can be also fetched separately using <a href="http://cran.r-project.org/package=RODBC">RODBC’s</a> <code>sqlGetResults()</code>. This also provides a way to fetch results in parts:</p>
+<p>Results can be also fetched separately using <a href="https://CRAN.R-project.org/package=RODBC">RODBC’s</a> <code>sqlGetResults()</code>. This also provides a way to fetch results in parts:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RODBCext)
 connHandle &lt;-<span class="st"> </span><span class="kw">odbcConnect</span>(<span class="st">&quot;myDatabase&quot;</span>)
 

@@ -16,18 +16,18 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-The package [RODBCext](http://cran.r-project.org/package=RODBCext)
+The package [RODBCext](https://CRAN.R-project.org/package=RODBCext)
 is an extension of the
-[RODBC](http://cran.r-project.org/package=RODBC) database 
+[RODBC](https://CRAN.R-project.org/package=RODBC) database 
 connectivity package. It provides support for parameterized queries. This 
 document describes what parameterized queries are and when they should be used.
 In addition some examples of ROBDCext usage are shown.
 
 It is assumed that you already know the 
-[RODBC](http://cran.r-project.org/package=RODBC) package
+[RODBC](https://CRAN.R-project.org/package=RODBC) package
 and the basics of [SQL](http://en.wikipedia.org/wiki/SQL) 
 and ODBC. If not, please read about them first, e.g. see the [ODBC Connectivity 
-vignette](http://cran.r-project.org/web/packages/RODBC/vignettes/RODBC.pdf)
+vignette](https://CRAN.R-project.org/package=RODBC/vignettes/RODBC.pdf)
 of the RODBC package.
 
 # What are parameterized queries for?
@@ -78,7 +78,7 @@ library(RODBC)
 connHandle <- odbcConnect("cakesDatabase")
 newData <- read.csv("newData.csv", stringsAsFactors = F)
 
-for(row in 1:nrow(newData)){
+for(row in seq_len(nrow(newData))){
   query <- paste0(
     "UPDATE cakes 
      SET price = ", newData$price[row], " 
@@ -121,7 +121,7 @@ library(RODBC)
 connHandle <- odbcConnect('studentsDatabase')
 newStudents <- read.csv('newStudents.csv', stringsAsFactors = F)
 
-for(row in 1:nrow(newStudents)){
+for(row in seq_len(nrow(newStudents))){
   query <- paste0(
     "INSERT INTO students (first_name, last_name)
      VALUES (
@@ -213,7 +213,7 @@ connHandle <- odbcConnect("cakesDatabase")
 newData <- read.csv("newData.csv", stringsAsFactors = F)
 
 query <- "UPDATE cakes SET price = ? WHERE cake = ?"
-for(row in 1:nrow(newData)){
+for(row in seq_len(nrow(newData))){
   sqlExecute(connHandle, query, newData[i, ])
 }
 
@@ -243,11 +243,11 @@ odbcClose(connHandle)
 
 This would be the most straightforward solution. 
 
-An excellent example is [dplyr](http://cran.r-project.org/package=dplyr), 
+An excellent example is [dplyr](https://CRAN.R-project.org/package=dplyr), 
 which provides a complete R to SQL mapper and allows us to completely forget 
 about the SQL. Another example are the *sqlSave(), sqlUpdate(), sqlCopy() and 
 sqlCopyTable()* functions from the 
-[RODBC](http://cran.r-project.org/package=RODBC) package which deal with 
+[RODBC](https://CRAN.R-project.org/package=RODBC) package which deal with 
 escaping values for us. 
 
 The problem is that:
@@ -268,7 +268,7 @@ very limited functionality and more flexible functions are using naive escaping
 methods. That is why RODBCext is a preferred way to make your R code SQL 
 injections safe.
 
-I hope [dplyr](http://cran.r-project.org/package=dplyr) developers will 
+I hope [dplyr](https://CRAN.R-project.org/package=dplyr) developers will 
 switch to use parameterized queries internally at some point. This would 
 provide R community with a brilliant and safe R to SQL mapper and to forget 
 about a manual preparation of SQL queries.
@@ -298,7 +298,7 @@ data <- data.frame(1:10000, letters[rep(1:10, 1000)])
 
 # Ordinary query - paste0() called in every loop
 system.time({
-  for(row in 1:nrow(data)){
+  for(row in seq_len(nrow(data))){
     query <- paste0("INSERT INTO my_table VALUES (", data[row, 1], "'", data[row, 2],"')")
     sqlQuery(connHandle, query)
   }
@@ -402,7 +402,7 @@ powerful data processing engines (which modern SQL databases already are).
 ## RODBCext
 
 RODBCext package tries to fill this gap by introducing parameterized queries
-support on the top of the [RODBC](http://cran.r-project.org/package=RODBC)
+support on the top of the [RODBC](https://CRAN.R-project.org/package=RODBC)
 package. RODBCext provides only two functions, both of them using database 
 connection handlers from RODBC:
 
@@ -439,7 +439,7 @@ odbcClose(connHandle)
 ```
 
 Results can be also fetched separately using 
-[RODBC's](http://cran.r-project.org/package=RODBC) `sqlGetResults()`.
+[RODBC's](https://CRAN.R-project.org/package=RODBC) `sqlGetResults()`.
 This also provides a way to fetch results in parts:
 ```{r eval = FALSE}
 library(RODBCext)

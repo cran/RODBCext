@@ -4,7 +4,7 @@
 #  connHandle <- odbcConnect("cakesDatabase")
 #  newData <- read.csv("newData.csv", stringsAsFactors = F)
 #  
-#  for(row in 1:nrow(newData)){
+#  for(row in seq_len(nrow(newData))){
 #    query <- paste0(
 #      "UPDATE cakes
 #       SET price = ", newData$price[row], "
@@ -21,7 +21,7 @@
 #  connHandle <- odbcConnect('studentsDatabase')
 #  newStudents <- read.csv('newStudents.csv', stringsAsFactors = F)
 #  
-#  for(row in 1:nrow(newStudents)){
+#  for(row in seq_len(nrow(newStudents))){
 #    query <- paste0(
 #      "INSERT INTO students (first_name, last_name)
 #       VALUES (
@@ -41,7 +41,7 @@
 #  newData <- read.csv("newData.csv", stringsAsFactors = F)
 #  
 #  query <- "UPDATE cakes SET price = ? WHERE cake = ?"
-#  for(row in 1:nrow(newData)){
+#  for(row in seq_len(nrow(newData))){
 #    sqlExecute(connHandle, query, newData[i, ])
 #  }
 #  
@@ -65,7 +65,7 @@
 #  
 #  # Ordinary query - paste0() called in every loop
 #  system.time({
-#    for(row in 1:nrow(data)){
+#    for(row in seq_len(nrow(data))){
 #      query <- paste0("INSERT INTO my_table VALUES (", data[row, 1], "'", data[row, 2],"')")
 #      sqlQuery(connHandle, query)
 #    }
