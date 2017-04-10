@@ -21,6 +21,8 @@
 #' @param channel ODBC connection obtained by \link{odbcConnect}
 #' @param query query string
 #' @param errors whether to display errors
+#' @param query_timeout the query timeout value in seconds
+#'        (0 means "no timeout", NULL does not change the default value)
 #' @return invisible(1) on success, -1 or an error (depending on errors parameter) on error
 #' @export
 #' @examples
@@ -28,32 +30,48 @@
 #'   conn = odbcConnect('MyDataSource')
 #'   
 #'   sqlPrepare(conn, "SELECT * FROM myTable WHERE column = ?")
-#'   sqlExecute(conn, 'myValue')
+#'   sqlExecute(conn, NULL, 'myValue')
 #'   sqlFetchMore(conn)
+#'   
+#'   # with a query timeout
+#'   sqlPrepare(conn, "SELECT * FROM myTable WHERE column = ?", query_timeout=60)
+#'   sqlExecute(conn, data='myValue', fetch=TRUE)
 #' }
-sqlPrepare <- function(channel, query, errors = TRUE)
+sqlPrepare = function(channel, query, errors = TRUE, query_timeout = NULL)
 {
-  if(!odbcValidChannel(channel)){
-    stop("first argument is not an open RODBC channel")
-  }
-  if(missing(query)){
-    stop("missing argument 'query'")
-  }
-  
-  if(nchar(enc <- attr(channel, "encoding"))){
-    query <- iconv(query, to=enc)
+  stopifnot(
+    odbcValidChannel(channel),
+    is.vector(query), is.character(query), length(query) == 1, all(!is.na(query))
+  )
+
+  enc = attr(channel, "encoding")
+  if (nchar(enc) > 0) {
+    query = iconv(query, to = enc)
   }
   query = as.character(query)
   
-  stat <- .Call("RODBCPrepare", attr(channel, "handle_ptr"), query)
-  if(stat == -1L) {
-    if(errors){
-      stop(paste0(RODBC::odbcGetErrMsg(channel), collapse='\n'))
-    }
-    else{
+  stat = .Call("RODBCPrepare", attr(channel, "handle_ptr"), query)
+  if (stat == -1L) {
+    if (errors) {
+      stop(paste0(RODBC::odbcGetErrMsg(channel), collapse = '\n'))
+    } else {
       return(stat)
     }
   }
+  
   attr(channel, 'query') = query
+  
+  # Set the query timeout
+  if (!is.null(query_timeout)) {
+    if (!errors) {
+      tryCatch(
+        odbcSetQueryTimeout(channel, query_timeout),
+        error = return
+      )
+    } else {
+      odbcSetQueryTimeout(channel, query_timeout)
+    }
+  }
+
   return(invisible(stat))
 }
