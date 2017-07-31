@@ -1,5 +1,5 @@
 Package: RODBCext
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person("Mateusz", "Zoltak", role = c("aut", "cre"), email = "zozlak@zozlak.org"),
     person("Brian", "Ripley", role = "aut"),
@@ -20,12 +20,12 @@ License: GPL-2 | GPL-3
 Maintainer: Mateusz Zoltak <zozlak@zozlak.org>
 NeedsCompilation: yes
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
-Packaged: 2017-04-10 10:08:41 UTC; zozlak
+RoxygenNote: 6.0.1
+Packaged: 2017-07-31 08:26:34 UTC; zozlak
 Author: Mateusz Zoltak [aut, cre],
   Brian Ripley [aut],
   Michael Lapsley [aut],
   Will Beasley [ctb],
   Juergen Altfeld [ctb]
 Repository: CRAN
-Date/Publication: 2017-04-10 11:45:01 UTC
+Date/Publication: 2017-07-31 08:41:00 UTC

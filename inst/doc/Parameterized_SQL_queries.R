@@ -29,7 +29,7 @@
 #         '", newStudents$last_name[row],"',
 #       )"
 #    )
-#    sqlQuery(P, query)
+#    sqlQuery(connHandle, query)
 #  }
 #  
 #  odbcClose(connHandle)
