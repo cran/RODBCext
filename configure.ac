@@ -52,10 +52,10 @@ if test -z "${R_HOME}"; then
   echo "could not determine R_HOME"
   exit 1
 fi
-CC=`"${R_HOME}/bin/R" CMD config CC`
-CPP=`"${R_HOME}/bin/R" CMD config CPP`
-CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
-CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+#CC=`"${R_HOME}/bin/R" CMD config CC`
+#CPP=`"${R_HOME}/bin/R" CMD config CPP`
+#CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
+#CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 
 if test -n "${ODBC_CONFIG}"; then
   RODBC_CPPFLAGS=`odbc_config --cflags`

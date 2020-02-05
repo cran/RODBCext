@@ -1,3 +1,8 @@
+Changes in RODBCext 0.3.2 (2020-02-05)
+
+  * Deprecated compilation environment vars removed from the configure
+    script.
+
 Changes in RODBCext 0.3.1 (2017-07-29)
 
   * Added workaround for Oracle's timestamp(n) data type.
